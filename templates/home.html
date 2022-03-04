@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="dark-theme">
+        <div class="container">
+            
+            <div class="row justify-content-md-center border-light">
+                <div class="col mt-5 mb-4">
+                    <h4 class="mt-auto "> <i class="fa-solid fa-compass me-2"></i> Trouper</h4>
+                </div>
+                <div class="col d-flex mt-5">
+                    <div class="ms-auto me-auto">
+                        <button class="btn btn-md pt-2 pb-2 ps-4 pe-4 border-light rounded-pill">
+                            <i class="fa-solid fa-user-plus"></i> Register
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5 justify-content-md-center">
+              <div class="col">
+                <span class="display-1">
+                    The modern artist <br />
+                    reside here
+                </span>
+              </div>
+            </div>
+
+            <div class="row mt-3 justify-content-md-center">
+                <div class="col">
+                    <h5>Half the world is always musical</h5>
+                </div>
+            </div>
+
+            <div class="row mt-5 justify-content-md-center">
+                <div class="container row">
+                    {% for item in key_features %}
+                    <div class="key_feature col-md-4 col-sm-6 col-xs-12">
+                        <div class="me-4 mt-4 me-sm-2 p-2">
+                            <div class="key_feature__header">
+                                <h5>{{ item.title}}</h5>
+                                <h6 class="text-bold">{{ item.caption}}</h6>
+                            </div>
+
+                            <div class="key_feature__thumbnail mt-3 rounded-3 bg-white text-black">
+                                dsmfkl
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+
+                <div class="row mt-5 mb-4 justify-content-md-center">
+                    <div class="big-banner bg-white rounded-3">
+                        
+                    </div>
+                </div>
+
+                <div class="row mt-5 mb-4 justify-content-md-center">
+                    <span class="display-2 text-center">
+                        ALSO MADE FOR <br /> MEDIA
+                        <div>
+                            <button class="btn btn-lg">
+                                Launch <i class="fa-solid fa-arrow-right-long"></i>
+                            </button>
+                        </div>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        
+    </div>
+{% endblock content %}

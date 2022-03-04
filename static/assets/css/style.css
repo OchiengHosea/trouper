@@ -1,0 +1,28 @@
+i{
+    margin-right: .2em;
+}
+
+.dark-theme{
+    background-color: rgb(30, 29, 35);
+    color: white;
+}
+
+.dark-theme button {
+    color: white;
+}
+
+.dark-theme button:hover{
+    color: rgba(235, 235, 235, .8);
+}
+
+.key_feature__header{
+    height: 5em;
+}
+
+.key_feature__thumbnail {
+    height: 15em !important;
+}
+
+.big-banner{
+    height: 25em;
+}
