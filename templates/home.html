@@ -10,7 +10,7 @@
                 <div class="col d-flex mt-5">
                     <div class="ms-auto me-auto">
                         <button class="btn btn-md pt-2 pb-2 ps-4 pe-4 border-light rounded-pill">
-                            <i class="fa-solid fa-user-plus"></i> Register
+                            <a href="{% url 'artist:artist_signup' %}"><i class="fa-solid fa-user-plus"></i> Register</a>
                         </button>
                     </div>
                 </div>
@@ -34,18 +34,18 @@
             <div class="row mt-5 justify-content-md-center">
                 <div class="container row">
                     {% for item in key_features %}
-                    <div class="key_feature col-md-4 col-sm-6 col-xs-12">
+                    <a class="key_feature col-md-4 col-sm-6 col-xs-12" href="{% url item.link %}">
                         <div class="me-4 mt-4 me-sm-2 p-2">
                             <div class="key_feature__header">
-                                <h5>{{ item.title}}</h5>
-                                <h6 class="text-bold">{{ item.caption}}</h6>
+                                <h5 class="text-white">{{ item.title}}</h5>
+                                <h6 class="text-bold text-blast-brown">{{ item.caption}}</h6>
                             </div>
 
                             <div class="key_feature__thumbnail mt-3 rounded-3 bg-white text-black">
-                                dsmfkl
+                                {% comment %} <a href="{% url 'song:song_list' %}">Songs</a> {% endcomment %}
                             </div>
                         </div>
-                    </div>
+                    </a>
                 {% endfor %}
                 </div>
 

@@ -1,0 +1,44 @@
+{% extends 'base_content.html' %}
+
+{% block content %}
+    <div class="p-3">
+        <div class="pt-4 pb-5">
+            <span class="display-4">Publish your song</span>
+        </div>
+        <hr />
+        <div class="">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="container-fluid">
+                    <div class="row">
+                        {% for field in form %}
+                        <div class="col-lg-8 col-md-7 colsm-12 form-group mt-4">
+                            <div>
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}{% if field.field.required %}*{% endif %}
+                                </label>
+                            </div>
+                            {{ field }}
+                            <small>
+                                {{ field.errors }}
+                            </small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% include "includes/actions_toolbar.html" %}
+            </form>
+        </div>
+    </div>
+
+    <style>
+        #id_genres{
+            min-height: 300px;
+        }
+    </style>
+    <script>
+        $("#id_genres").addClass('form-control border-input');
+        $("#id_title").addClass('form-control border-input');
+        $("#id_file_name").addClass('form-control border-input')
+    </script>
+{% endblock  %}

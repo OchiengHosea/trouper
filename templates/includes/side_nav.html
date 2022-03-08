@@ -1,0 +1,16 @@
+{% load static %}
+<div id='sidenav' class='border-end bg-dark'>
+    <div class="text-center border-bottom pt-3 pb-3">
+        <img width="40" height="40" src="{% static 'img/user.png' %}" class="rounded-circle" />
+        <div>
+            <small class="text-white">Username</small>
+        </div>
+    </div>
+    
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'artist:artist_list' %}">Artists</a></li>
+        <li><a href="{% url 'song:song_list' %}">Songs</a></li>
+        <li><a href="{% url 'song:song_list' %}">Albums</a></li>
+    <ul>
+</div>

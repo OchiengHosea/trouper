@@ -12,4 +12,5 @@ class Song(BaseModel):
     title = models.CharField(max_length=255)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     genres = models.ManyToManyField(Genre)
+    file_url = models.CharField(max_length=215)
     file_name = models.FileField(upload_to=f'songs/{artist.name}')

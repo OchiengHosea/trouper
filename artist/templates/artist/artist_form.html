@@ -1,0 +1,42 @@
+{% extends 'base_content.html' %}
+
+{% block content %}
+    <div class="p-3">
+        <div class="pt-4 pb-5">
+            <span class="display-4">Artist Signup</span>
+        </div>
+        <hr />
+        <div class="">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="container-fluid me-lg-5 pe-lg-5">
+                    <div class="row me-lg-5 pe-lg-5">
+                        {% for field in form %}
+                        <div class="col-xl-3 col-lg-3 col-md-5 form-group mt-4">
+                            <div>
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}{% if field.field.required %}*{% endif %}
+                                </label>
+                            </div>
+                            {{ field }}
+                            <small>
+                                {{ field.errors }}
+                            </small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% include "includes/actions_toolbar.html" %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        #id_genres{
+            min-height: 300px;
+        }
+    </style>
+    <script>
+        $("input").addClass('form-control border-input');
+    </script>
+{% endblock  %}

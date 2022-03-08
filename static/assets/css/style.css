@@ -1,10 +1,39 @@
+#content{
+    height: 100%;
+    flex-flow:wrap
+}
+
+#sidenav{
+    height: 100%;
+    position: absolute;
+}
+
+#data-content{
+    margin-left: 200px;
+}
+
 i{
     margin-right: .2em;
+}
+.card {
+    border: none;
+}
+
+.card-header{
+    background-color: white;
+}
+
+.card-content {
+    margin: 2rem;
 }
 
 .dark-theme{
     background-color: rgb(30, 29, 35);
     color: white;
+}
+
+.bg-dark {
+    background-color: rgb(30, 29, 35);
 }
 
 .dark-theme button {
@@ -25,4 +54,62 @@ i{
 
 .big-banner{
     height: 25em;
+}
+
+a {
+    text-decoration: none;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+button a {
+    color: #B2853B;
+}
+
+.bg-alice-blue {
+    background-color: aliceblue;
+}
+
+button:hover {
+    background-color: #B2853B;
+}
+
+button:hover a {
+    color: white;
+}
+
+
+.button:focus, .form-control:focus{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.song:not(last-child) {
+    border-bottom: 1px solid rgba(235, 235, 235, .8);
+}
+
+.song:not(first-child) {
+    border-top: 1px solid rgba(235, 235, 235, .8);
+}
+
+.bg-blast-brown {
+    background-color: #B2853B;
+}
+
+.text-blast-brown {
+    color: #B2853B;
+}
+
+.song-list .song span:not(first-child) {
+    margin-left: 1rem;
+}
+
+
+/* ++++++++++++++++Artist+++++++++++++++++ */
+
+.artist-card {
+    height: 180px;
+    border-radius: 20px;
 }

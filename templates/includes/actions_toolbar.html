@@ -1,0 +1,15 @@
+<div class="d-flex">
+    <div class="mt-5 ms-auto">
+        
+        <button type="button" class="btn btn-wd btn-info btn-magnify" type="button" value="CANCEL" onclick="window.history.go(-1);">
+            CANCEL
+        </button>
+        
+        {% if delete_url %}
+            <a class="btn btn-wd btn-danger btn-magnify me-2" href="{{delete_url}}">Delete</a>
+        {% endif %}
+        <button type="submit" class="btn btn-wd btn-info btn-magnify">
+            SAVE
+        </button>
+    </div>    
+</div>

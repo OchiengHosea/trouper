@@ -1,0 +1,48 @@
+{% extends 'base_content.html' %}
+{% load static %}
+{% block content %}
+    <div class="p-2">
+        <small class="display-4">Songs</small>
+        <div class="pt-2 d-flex">
+            <div>
+                <button class="btn btn-sm border">
+                    <a href="{% url 'song:publish_song' %}">Publish new song</a>
+                </button>
+            </div>
+            <div class="ms-2">
+                <input type="text" placeholder="Search by title" class="form-control form-control-sm border-input">
+            </div>
+        </div>
+    </div>
+    <div class="song-list p-2">
+        <div class="songs-summarry">
+            <small><i class="fa-solid fa-play-pause"></i> You have {{songs.count}} Songs
+        </div>
+
+        <br />
+
+        {% for song in songs %}
+            <div class="p-2 pt-3 pb-3 pointer song">
+                <span class="song-title">
+                    <small title="Play">
+                        <i class="fa-solid fa-play"></i>
+                    </small>
+                </span>
+
+                <span class="song-title">
+                    {{ song.title }}
+                </span>
+                <span class="song-date-uploaded">
+                    <small>
+                        <small><i class="fa-solid fa-cloud-arrow-up"></i></small> {{ song.created_on }}
+                    </small>
+                </span>
+
+                <small>
+                    <a href="{% static song.file_url %}">{{ song.file_name }}</a>
+                </small>
+                
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

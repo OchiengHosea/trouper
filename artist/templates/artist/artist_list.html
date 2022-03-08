@@ -1,7 +1,43 @@
-{% extends 'base.html' %}
+{% extends 'base_content.html' %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-    {{user.username}}
-    {% endif %}
+    <div class="bg-alice-ble">
+        <div class="p-2">
+            <small class="display-4">Artists</small>
+            <div class="pt-2 d-flex">
+                <div>
+                    <button class="btn btn-sm border">
+                        <a href="{% url 'artist:artist_signup' %}">Signup</a>
+                    </button>
+                </div>
+                <div class="ms-2">
+                    <input type="text" placeholder="Search by title" class="form-control form-control-sm border-input">
+                </div>
+            </div>
+        </div>
+        <div class="song-list p-2">
+            <div class="songs-summarry">
+                <small><i class="fa-solid fa-play-pause"></i> {{artists.count}} Artists
+            </div>
+
+            <hr />
+            <div class="container-fluid row">
+                {% for artist in artists %}
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class="m-2 p-3 border shadow-sm d-flex artist-card pointer bg-white">
+                            <b>
+                                <small class="artist-name mb-auto me-auto">
+                                    {{artist.full_name}}
+                                </small>
+                            </b>
+
+                            <small class="artist-name mt-auto ms-auto">
+                                <small><i class="fa-solid fa-music"></i></small> {{artist.song.count}}
+                            </small>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock content %}

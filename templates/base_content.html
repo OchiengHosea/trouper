@@ -13,11 +13,19 @@
         {# Display django.contrib.messages as Bootstrap alerts #}
         {% bootstrap_messages %}
         <link type="text/css" href="{% static 'assets/css/style.css' %}" rel="stylesheet"/>
+        <link type="text/css" href="{% static 'assets/css/sidenav.css' %}" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     </head>
 
     <body>
-        {% block content %}{% endblock content %}
+        <div class="d-flex" id="content">
+            <div>
+                {% include 'includes/side_nav.html' %}
+            </div>
+            <div class="flex-fill" id="data-content">
+                {% block content  %}{% endblock content %}
+            </div>
+        </div>
     </body>
 </html>
