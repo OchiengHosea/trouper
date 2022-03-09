@@ -32,31 +32,28 @@ class SongCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('song:song_list')
     
-    def form_valid(self, form):
-        msg = 'Category registered successfully'
-        messages.add_message(self.request, messages.SUCCESS, msg)
-        # form.save()
+    # def form_valid(self, form):
+    #     msg = 'Category registered successfully'
+    #     messages.add_message(self.request, messages.SUCCESS, msg)
+    #     form.save()
 
-        # self.object = form.instance
-        return redirect(self.get_success_url())
+    #     self.object = form.instance
+    #     return redirect(self.get_success_url())
     
     def post(self, request, *args, **kwargs):
         form = SongForm(self.request.POST, self.request.FILES)
         file = self.request.FILES['file_name']
-        fs = FileSystemStorage(location='static/', base_url='static/files')
+        fs = FileSystemStorage(location=f'media/uploads/{request.user.username}/', base_url=f'/media/uploads/{request.user.username}/')
         filenme = fs.save(file.name, file)
         
         url = fs.url(filenme)
         
         if form.is_valid():
-            print("valid form")
-            import pdb
-            pdb.set_trace()
             song = Song.objects.create(
                 title=form.data.get('title'),
-                artist=Artist.objects.get(user__pk=self.request.user.pk),
+                artist=Artist.objects.filter(user__pk=self.request.user.pk).first(),
                 file_url=url,
-                file_name=file)
+                file_name=file.name)
             song.genres.add(form.data.get('genres'))
         else:
             print("Invalid form")

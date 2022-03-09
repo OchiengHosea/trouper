@@ -43,9 +43,24 @@
 
                             <div class="key_feature__thumbnail mt-3 rounded-3 bg-white text-black">
                                 {% comment %} <a href="{% url 'song:song_list' %}">Songs</a> {% endcomment %}
+                                {% comment %} <img src="{% static item.skin %}" /> {% endcomment %}
                             </div>
                         </div>
                     </a>
+                    <a class="key_feature col-md-4 col-sm-6 col-xs-12" href="{% url item.link %}">
+                        <div class="me-4 mt-4 me-sm-2 p-2">
+                            <div class="key_feature__header">
+                                <h5 class="text-white">Artists</h5>
+                                <h6 class="text-bold text-blast-brown">Major and upcoming artists</h6>
+                            </div>
+
+                            <div class="key_feature__thumbnail mt-3 rounded-3 bg-white text-black">
+                                {% comment %} <a href="{% url 'song:song_list' %}">Songs</a> {% endcomment %}
+                                {% comment %} <img src="{% static item.skin %}" /> {% endcomment %}
+                            </div>
+                        </div>
+                    </a>
+
                 {% endfor %}
                 </div>
 

@@ -1,6 +1,25 @@
 {% extends 'base_content.html' %}
 {% load static %}
 {% block content %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.7/mediaelementplayer.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.7/mediaelement-and-player.min.js">
+</script>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+  integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+  crossorigin="anonymous"
+/>
+<link
+  rel="stylesheet"
+  href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.0.53/wavesurfer.min.js"></script>
+
     <div class="p-2">
         <small class="display-4">Songs</small>
         <div class="pt-2 d-flex">
@@ -24,7 +43,7 @@
         {% for song in songs %}
             <div class="p-2 pt-3 pb-3 pointer song">
                 <span class="song-title">
-                    <small title="Play">
+                    <small title="Play" onclick="load('{{ song.file_url }}');">
                         <i class="fa-solid fa-play"></i>
                     </small>
                 </span>
@@ -32,17 +51,45 @@
                 <span class="song-title">
                     {{ song.title }}
                 </span>
+
+                {% comment %} <span>
+                    <small onclick="load('{{ song.file_url }}');">Load</small>
+                </span> {% endcomment %}
+
                 <span class="song-date-uploaded">
                     <small>
                         <small><i class="fa-solid fa-cloud-arrow-up"></i></small> {{ song.created_on }}
                     </small>
                 </span>
 
-                <small>
-                    <a href="{% static song.file_url %}">{{ song.file_name }}</a>
-                </small>
+                {% comment %} <small>
+                    <a href="{{ song.file_url }}">{{ song.file_url }}</a>
+                </small> {% endcomment %}
+
+                {% comment %} <audio class="fc-media" style="width: 100%;">
+                    <source src="{{song.file_url}}" type="audio/mp3"/>
+                </audio> {% endcomment %}
+                
                 
             </div>
+            <div id="waveform"></div>
+
         {% endfor %}
     </div>
+
+    <script>
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform',
+            // Here you can use wavesurfer docs on configuration
+            // to customize your player!
+          })
+
+        function load(url){
+            wavesurfer.load(url);
+        }
+
+        wavesurfer.on('ready', function () {
+            wavesurfer.play();
+        });
+    </script>
 {% endblock content %}

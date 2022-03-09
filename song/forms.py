@@ -13,13 +13,13 @@ class SongForm(forms.Form):
         self.fields['genres'].choices = ((genre.id, genre.title) for genre in Genre.objects.all())
     
     class Meta:
-        # model = Song
-        # fields = '__all__'
-        # exclude = ('is_active', 'artist',)
+        model = Song
+        fields = '__all__'
+        exclude = ('is_active',)
         
         widgets = {
             'title': forms.TextInput(attrs={'class':'form-control border-input'}),
-            'filen_name': forms.TextInput(attrs={'class':'form-control border-input'}),
+            'filen_name': forms.FileInput(attrs={'class':'form-control border-input', 'accept':'.mp3'}),
             'genres': forms.SelectMultiple(
                 attrs={'class': 'form-control border-input'},
                 choices=(('', '')))
