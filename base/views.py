@@ -18,3 +18,6 @@ class HomePage(TemplateView):
         )
         context.update(data)
         return context
+    
+    
+class MusicResultAPIView()
