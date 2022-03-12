@@ -4,8 +4,10 @@ from datetime import datetime
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from base.serializers import RecognitionResultSerializer
 
 from django.db import transaction
 
@@ -38,20 +40,19 @@ class MusicResultAPIView(APIView):
 class RecognitionResultsAPIView(APIView):
     @transaction.atomic
     def post(self, *args, **kwargs):
-        post_data = self.request.data.copy()
-        
-        music_data = post_data["metadata"]["music"][0]
+        music_data = self.request.data
         artists_list = music_data["artists"]
         artists = [ArtistR.objects.create(name=artist['name']) for artist in artists_list]
         
         album = Album.objects.create(name=music_data['album']['name'])
         
         genres_list = music_data["genres"]
+        
         genres = [Genre.objects.create(title=genre['name']) for genre in genres_list]
         
         title = music_data["title"]
         label = music_data["label"]
-        
+
         external_ids = music_data["external_ids"]
         release_date = datetime.strptime(music_data["release_date"], '%Y-%m-%d')
         try:
@@ -68,6 +69,10 @@ class RecognitionResultsAPIView(APIView):
         
         return Response('Entry made successfully', status=status.HTTP_200_OK)
     
-    # def get(self, *args, **kwargs):
-        
-            
+class RecognitionResultsList(ListAPIView):
+    model = SongRecognitionResult
+    serializer_class = RecognitionResultSerializer
+    
+    def get_queryset(self):
+        return self.model.objects.all()
+    

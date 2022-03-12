@@ -5,5 +5,6 @@ import base.views as base_views
 urlpatterns = [
     path('', song_views.SongListView.as_view(), name='song_list'),
     path('publish_song/', song_views.SongCreateView.as_view(), name='publish_song'),
-    path('recognition_results/', base_views.RecognitionResultsAPIView.as_view(), name="add_recognition_result")
+    path('recognition_results/', base_views.RecognitionResultsAPIView.as_view(), name="add_recognition_result"),
+    path('recognition_results/list/', base_views.RecognitionResultsList.as_view(), name="recognition_result_list")
 ]

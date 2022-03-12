@@ -1,6 +1,7 @@
 import os, sys
 import json
 import time
+import requests
 import threading
 from threading import Timer
 from acrcloud.recognizer import ACRCloudRecognizer
@@ -9,20 +10,23 @@ import sounddevice
 from scipy.io.wavfile import write
 
 def process_recognition_results(results):
+    print(results)
     status_object = results["status"]
+    url = 'https://9464-102-222-146-194.ngrok.io/songs/recognition_results/'
+    headers = {
+        'Content-Type': 'application/json; charset=utf8'
+    }
+    
     if status_object["code"] == 0:
-        music_data = results["metadata"]["music"][0]
-        title = music_data["title"]
-        label = music_data["label"]
-        
-        album_data = music_data["album"]
-        
-        artists = music_data["artists"]
-        
-        genres = music_data["genres"]
-        external_ids = music_data["external_ids"]
+        "Posting"
+        data = results["metadata"]["music"][0]
+        response = requests.post(url, json.dumps(data), headers=headers)
+        if response.status_code == 200:
+            print("Posted successfully..")
+        else:
+            print("An error occured while posting...")
     else:
-        print("Unrecorgnized music", json.dumps(status_object))
+        print("Unrecorgnized music", json.loads(status_object))
     
     
 
@@ -42,7 +46,7 @@ def record_audio():
     
     recognizer = ACRCloudRecognizer(config)
     results = recognizer.recognize_by_file('samplerec.wav', 10)
-    music_details = process_recognition_results(results)
+    music_details = process_recognition_results(json.loads(results))
     # process results
     # send results to the backend
     print("Cleaning up files")
