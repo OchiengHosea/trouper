@@ -3,11 +3,13 @@ from pyexpat import model
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from base.models import BaseModel
+from base.models import BaseModel, BaseModelIdOnly, BaseModelNoActive
 
 
 User = get_user_model()
 
+class ArtistR(BaseModelNoActive):
+    name = models.CharField(max_length=225)
 class Artist(BaseModel):
     full_name = models.CharField(max_length=225)
     stage_name = models.CharField(max_length=225)
