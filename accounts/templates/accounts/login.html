@@ -1,0 +1,33 @@
+
+{% include 'base.html' %}
+
+<div class="flex justify-content-center">
+    <div class="m-auto">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container-fluid">
+                <div class="row">
+                    {% for field in form %}
+                    <div class="col-lg-8 col-md-7 colsm-12 form-group mt-4">
+                        <div>
+                            <label for="{{ field.id_for_label }}">
+                                {{ field.label }}{% if field.field.required %}*{% endif %}
+                            </label>
+                        </div>
+                        {{ field }}
+                        <small>
+                            {{ field.errors }}
+                        </small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                {% if errors %}
+                    {{errors}}
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary">Login</button>
+        </form>
+    </div>
+</div>

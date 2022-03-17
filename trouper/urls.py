@@ -19,8 +19,9 @@ from django.conf.urls.static import static
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('base.urls')),
+    path('', include(('base.urls', 'base'), namespace='base')),
     path('admin/', admin.site.urls),
+    path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
     path('artists/', include(('artist.urls', 'artist'), namespace='artist')),
     path('songs/', include(('song.urls', 'song'), namespace='song')),
 ]

@@ -13,6 +13,7 @@ from django.db import transaction
 
 from artist.models import Artist, ArtistR
 from song.models import Album, Genre, SongRecognitionResult
+from django.db.models import Count
 # Create your views here.
 class HomePage(TemplateView):
     template_name = 'home.html'
@@ -45,7 +46,7 @@ class RecognitionResultsAPIView(APIView):
         artists = [ArtistR.objects.create(name=artist['name']) for artist in artists_list]
         
         album = Album.objects.create(name=music_data['album']['name'])
-        
+                
         genres_list = music_data["genres"]
         
         genres = [Genre.objects.create(title=genre['name']) for genre in genres_list]
@@ -54,15 +55,28 @@ class RecognitionResultsAPIView(APIView):
         label = music_data["label"]
 
         external_ids = music_data["external_ids"]
-        release_date = datetime.strptime(music_data["release_date"], '%Y-%m-%d')
+        release_date = datetime.strptime(music_data["release_date"], '%Y-%m-%d').date()
+        # record_time = datetime.strptime(music_data["timestamp_utc"], '%Y-%m-%d %H:%m:%S')
         try:
             isrc = external_ids['isrc'][0]
             upc = external_ids['upc'][0]
-            entry = SongRecognitionResult.objects.create(title=title, label=label, album=album, iscr=isrc, upc=upc, release_date=release_date)
+            entry = SongRecognitionResult.objects.create(
+                title=title, 
+                label=label, 
+                album=album, 
+                iscr=isrc, 
+                upc=upc, 
+                release_date=release_date)
         except Exception as e:
             isrc = external_ids['isrc']
             upc = external_ids['upc']
-            entry = SongRecognitionResult.objects.create(title=title, label=label, album=album, isrc=isrc, upc=upc, release_date=release_date)
+            entry = SongRecognitionResult.objects.create(
+                title=title,
+                label=label,
+                album=album,
+                isrc=isrc,
+                upc=upc,
+                release_date=release_date)
         
         [entry.artists.add(artist) for artist in artists]
         [entry.genres.add(genre) for genre in genres]
@@ -75,4 +89,28 @@ class RecognitionResultsList(ListAPIView):
     
     def get_queryset(self):
         return self.model.objects.all()
+    
+
+class RecognitionResultsSummary(TemplateView):
+    template_name = 'song/recognition_results.html'
+    def get_context_data(self, *args, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        summary = SongRecognitionResult.objects.all() \
+            .values('title', 'label', 'isrc', 'upc') \
+            .annotate(frequency=Count('isrc')) \
+            .order_by('-frequency')
+            
+        context.update(dict(summaries=summary))
+        return context
+
+
+
+class RecognitionResultsSummaryAPIView(APIView):
+    def get(self, *args, **kwargs):
+        summary = SongRecognitionResult.objects.all() \
+            .values('title', 'label', 'isrc', 'upc') \
+            .annotate(frequency=Count('title')) \
+            .order_by('-frequency')
+            
+        return Response(summary, status=status.HTTP_200_OK)
     

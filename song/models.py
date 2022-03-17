@@ -25,5 +25,15 @@ class SongRecognitionResult(BaseModelNoActive):
     label = models.CharField(max_length=255)
     isrc = models.CharField(max_length=125)
     upc = models.CharField(max_length=125)
+    bill_status = models.CharField(max_length=55, default='Pending')
     release_date = models.DateField()
+    # record_time = models.DateTimeField()
+    
+    @property
+    def artist_names(self):
+        return "".join([artist.name for artist in self.artists])
+    
+    @property
+    def genre_names(self):
+        return "".join([genre.title for genre in self.genres])
     

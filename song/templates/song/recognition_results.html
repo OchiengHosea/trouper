@@ -1,0 +1,32 @@
+{% extends 'base_content.html' %}
+
+{% block content %}
+    <div class="bg-alice-ble">
+        <div class="p-2">
+            <small class="display-4">Recognition Result Summaries</small>
+            <div class="pt-2 d-flex">
+                <div class="ms-2">
+                    <input type="text" placeholder="Search by title" class="form-control form-control-sm border-input">
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-sm">
+            <thead>
+                <th>Title</th>
+                <th>Label</th>
+                <th>Frequency</th>
+            </thead>
+            <tbody>
+                {% for summary in summaries %}
+                    <tr>
+                        <td>{{ summary.title }}</td>
+                        <td>{{ summary.label }}</td>
+                        <td>{{ summary.frequency }}</td>
+                    </tr>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
