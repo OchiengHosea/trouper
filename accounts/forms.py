@@ -9,5 +9,5 @@ class LoginForm(forms.Form):
     
         widgets = {
             'username': forms.TextInput(attrs={'class':'form-control border-input'}),
-            'password': forms.PasswordInput(attrs={'class':'form-control border-input'})
+            'password': forms.PasswordInput(attrs={'class':'form-control border-input'}),
         }

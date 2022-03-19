@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from django.core.files.storage import FileSystemStorage
 from artist.models import Artist
-from song.models import Genre, Song
+from song.models import Genre, Recorder, Song
 from django.views.generic import CreateView, ListView
 from song.forms import SongForm
 from django.contrib import messages
@@ -57,11 +57,20 @@ class SongCreateView(LoginRequiredMixin, CreateView):
             song.genres.add(form.data.get('genres'))
         else:
             print("Invalid form")
-            import pdb
-            pdb.set_trace()
+            
             pass
             
         return redirect(self.get_success_url())
     
+class RecorderListView(ListView):
+    model = Recorder
     
-
+    def get_queryset(self):
+        return super().get_queryset()
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["recorders"] = self.get_queryset
+        return context
+    

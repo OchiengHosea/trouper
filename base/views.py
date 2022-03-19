@@ -12,7 +12,8 @@ from base.serializers import RecognitionResultSerializer
 from django.db import transaction
 
 from artist.models import Artist, ArtistR
-from song.models import Album, Genre, SongRecognitionResult
+from song.filters import RecognitionResultFilter
+from song.models import Album, Genre, Recorder, SongRecognitionResult
 from django.db.models import Count
 # Create your views here.
 class HomePage(TemplateView):
@@ -90,12 +91,21 @@ class RecognitionResultsList(ListAPIView):
     def get_queryset(self):
         return self.model.objects.all()
     
-
+class DashboardView(TemplateView):
+    template_name = 'dashboard.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["recorders"] = Recorder.objects.all()
+        return context
+    
 class RecognitionResultsSummary(TemplateView):
     template_name = 'song/recognition_results.html'
     def get_context_data(self, *args, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        summary = SongRecognitionResult.objects.all() \
+        context = super().get_context_data(**kwargs)
+        results = RecognitionResultFilter(self.request.GET, queryset=SongRecognitionResult.objects.all())
+        
+        summary = results.qs \
             .values('title', 'label', 'isrc', 'upc') \
             .annotate(frequency=Count('isrc')) \
             .order_by('-frequency')

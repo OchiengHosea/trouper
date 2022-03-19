@@ -1,0 +1,38 @@
+{% extends 'base_content.html' %}
+
+{% block content %}
+    <div class="bg-alice-ble">
+        <div class="p-2">
+            <small class="display-4">Recorders</small>
+            <div class="pt-2 d-flex">
+                <div class="ms-2">
+                    <input type="text" placeholder="Search by title" class="form-control form-control-sm border-input">
+                </div>
+            </div>
+        </div>
+        <div class="song-list p-2">
+            <div class="songs-summarry">
+                <small><i class="fa-solid fa-play-pause"></i> {{recorders.count}} Players
+            </div>
+
+            <hr />
+            <div class="container-fluid row">
+                {% for recorder in recorders %}
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class="m-2 p-3 border shadow-sm d-flex simple-card pointer bg-white">
+                            <b>
+                                <small class="recorder-name mb-auto me-auto">
+                                    {{recorder.name}}
+                                </small>
+                            </b>
+
+                            <small class="recorder-name mt-auto ms-auto">
+                                <small><i class="fa-solid fa-music"></i></small> {{recorder.recognitionresultssummary_set.count}} Plays
+                            </small>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

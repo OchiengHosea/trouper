@@ -8,6 +8,9 @@ class Album(BaseModelNoActive):
 
 class Genre(BaseModelIdOnly):
     title = models.CharField(max_length=75)
+    
+class Recorder(BaseModel):
+    name = models.CharField(max_length=125, unique=True)
 
 class Song(BaseModel):
     title = models.CharField(max_length=255)
@@ -15,7 +18,6 @@ class Song(BaseModel):
     genres = models.ManyToManyField(Genre)
     file_url = models.CharField(max_length=215)
     file_name = models.CharField(max_length=215)
-    # file_name = models.FileField(upload_to=f'songs/{artist.name}')
     
 class SongRecognitionResult(BaseModelNoActive):
     artists = models.ManyToManyField(ArtistR)
@@ -27,7 +29,7 @@ class SongRecognitionResult(BaseModelNoActive):
     upc = models.CharField(max_length=125)
     bill_status = models.CharField(max_length=55, default='Pending')
     release_date = models.DateField()
-    # record_time = models.DateTimeField()
+    recorded_by = models.ForeignKey(Recorder, on_delete=models.CASCADE)
     
     @property
     def artist_names(self):

@@ -113,3 +113,80 @@ button:hover a {
     height: 180px;
     border-radius: 20px;
 }
+
+.simple-card {
+    height: 180px;
+    border-radius: 10px;
+}
+
+
+table thead th{
+    font-size: smaller;
+}
+
+tbody td {
+    font-size: smaller;
+    font-weight: 300;
+}
+
+.report-table-div {
+    max-height: 500px !important;
+    overflow-y: scroll;
+}
+
+.report-table-div thead tr:nth-child(1) th{
+    background: #B2853B;
+    color: white;
+    position: sticky;
+    font-size: small;
+    top: 0;
+    z-index: 10;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.table > :not(:first-child) {
+    border-top: none;
+}
+
+table thead{
+    border-bottom-width: 2px !important;
+    /* border-bottom: 2px solid grey; */
+}
+
+.table thead tr th {
+    border-bottom: none;
+}
+
+
+.overflow-auto::-webkit-scrollbar, mat-dialog-container::-webkit-scrollbar {
+    width: 4px !important;
+    height: 4px;               /* width of the entire scrollbar */
+  }
+
+.overflow-auto::-webkit-scrollbar-track, mat-dialog-container::-webkit-scrollbar-track {
+    background: white;        /* color of the tracking area */
+}
+
+.overflow-auto::-webkit-scrollbar-thumb, mat-dialog-container::-webkit-scrollbar-thumb {
+    background-color: grey;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    /* border: 1px solid orange; creates padding around scroll thumb */
+}
+
+.btn {
+    border: none;
+}
+
+.btn-primary{
+    background-color: #B2853B;
+    color: white;
+}
+
+.btn-primary:hover{
+    opacity: .75;
+    background-color: #B2853B;
+}
+
+.text-bright-orange{
+    color: rgb(252, 82, 7)
+}

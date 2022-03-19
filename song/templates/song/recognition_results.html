@@ -3,30 +3,33 @@
 {% block content %}
     <div class="bg-alice-ble">
         <div class="p-2">
-            <small class="display-4">Recognition Result Summaries</small>
+            <small class="display-5 text-blast-brown">Recognition Result Summaries</small>
             <div class="pt-2 d-flex">
-                <div class="ms-2">
+
+                <div class="mt-2">
                     <input type="text" placeholder="Search by title" class="form-control form-control-sm border-input">
                 </div>
             </div>
         </div>
 
-        <table class="table table-sm">
-            <thead>
-                <th>Title</th>
-                <th>Label</th>
-                <th>Frequency</th>
-            </thead>
-            <tbody>
-                {% for summary in summaries %}
-                    <tr>
-                        <td>{{ summary.title }}</td>
-                        <td>{{ summary.label }}</td>
-                        <td>{{ summary.frequency }}</td>
-                    </tr>
-                    
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="m-2 col-lg-6 col-md-7 col-sm-12 p-0 m-0 report-table-div table-responsive shadow-sm border rounded overflow-auto">
+            <table class="table table-sm table-hover p-2 m-0 rounded">
+                <thead class="border-0">
+                    <th>Title</th>
+                    <th>Label</th>
+                    <th>Frequency</th>
+                </thead>
+                <tbody>
+                    {% for summary in summaries %}
+                        <tr class="pointer">
+                            <td class="text-black">{{ summary.title }}</td>
+                            <td>{{ summary.label }}</td>
+                            <td>{{ summary.frequency }}</td>
+                        </tr>
+                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock content %}

@@ -13,7 +13,11 @@ class LoginView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = LoginForm()
+        login_form = LoginForm()
+        updates = dict(
+            form=login_form,
+            )
+        context.update(updates)
         return context
     
     def post(self, *args, **kwargs):
@@ -21,6 +25,9 @@ class LoginView(TemplateView):
         user = authenticate(username=data.get('username'), password=data.get('password'))
         if user:
             auth_login(self.request, user)
+            if self.request.GET:
+                next_url = self.request.GET.get('next')
+                return redirect(next_url)
             return redirect(reverse('base:home'))
         context = self.get_context_data()
         context["form"] = LoginForm(self.request.POST)
