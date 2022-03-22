@@ -1,35 +1,140 @@
 {% extends 'base_content.html' %}
 
 {% block content %}
-    <div class="bg-alice-ble">
-        <div class="p-2">
-            <small class="display-5 text-blast-brown">Recognition Result Summaries</small>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <div class="music-gold-prtn d-flex">
+        <form action="" method="GET" enctype="multipart/form-data" class="p-2 pt-4 pb-4" id="summary-search-form">
+            <small class="display-5 text-blast-brown header">Summaries</small>
             <div class="pt-2 d-flex">
 
-                <div class="mt-2">
-                    <input type="text" placeholder="Search by title" class="form-control form-control-sm border-input">
+                <div class="mt-2 form-group">
+                    <label>Enter station</label>
+                    <input type="text" placeholder="Search by station" class="form-control form-control-sm border-input" name="played_by" value="{{played_by}}">
+                </div>
+                
+                <div class="m-2 mb-0 form-group">
+                    <label>Enter title</label>
+                    <input type="text" placeholder="Search by title" class="form-control form-control-sm border-input" name="title" value="{{title}}">
+                </div>
+
+                <div class="m-2 mb-0 form-group">
+                    <label>Enter start date</label>
+                    <input type="date" placeholder="Date from" class="form-control form-control-sm border-input" name="recognition_date_from">
+                </div>
+
+                <div class="m-2 mb-0 form-group">
+                    <label>Enter end date</label>
+                    <input type="date" placeholder="Date To" class="form-control form-control-sm border-input" name="recognition_date_to">
+                </div>
+
+                <input type="hidden" placeholder="" class="form-control form-control-sm border-input" name="isrc">
+            </div>
+        </form>
+
+        <div class="ms-auto me-5 mt-3">
+            <p class="text-black-50"><span class='display-6'>{{selected_song.title}}</span></p>
+            <hr />
+            <small>{{selected_song.created_on}}</small>
+            <br />
+            <small class="ms-auto">{{played_by}}</small>
+        </div>
+    </div>
+        <div class="container-fluid row m-0 p-0">
+            <div class="col-lg-6 col-md-7 col-sm-12 p-0 m-0">
+                <div class="m-2 report-table-div table-responsive shadow-sm border rounded overflow-auto">
+                    <table class="table table-sm table-hover p-2 m-0 rounded" id="sumary-table">
+                        <thead class="border-0">
+                            <th>Title</th>
+                            <th>Label</th>
+                            <th>Frequency</th>
+                        </thead>
+                        <tbody>
+                            {% for summary in summaries %}
+                                <tr class="pointer" onclick="setSelectedSong('{{summary.title}} ,{{summary.isrc}}')">
+                                    <td class="text-black">{{ summary.title }}</td>
+                                    <td>{{ summary.label }}</td>
+                                    <td>{{ summary.frequency }} {{summary.isrc}}</td>
+                                </tr>
+                                
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                </div>
+
+                {% if selected_song %}
+                <div class="song_details m-2 shadow-sm d-flex p-2 pb-4">
+                    <div class="artists border p-2 m-2 rounded">
+                        <h4 class="text-blast-brown mb-4">Artists</h4>
+
+                        <div class="mb-2">
+                            {% for artist in selected_song.artists.all %}
+                                <span class="border rounded p-2 pointer text-black-50">{{artist.name}}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="artists border p-2 m-2 rounded">
+                        <h4 class="text-blast-brown mb-4">Genres</h4>
+
+                        <div class="mb-2">
+                            {% for genre in selected_song.genres.all %}
+                                <span class="border rounded p-2 pointer text-black-50">{{genre.title}}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+    
+            <div class="col-lg-6 col-md-3 col-sm-12 p-0 m-0">
+                <div class="m-2 shadow-sm" id="song_stats_chart">
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
-
-        <div class="m-2 col-lg-6 col-md-7 col-sm-12 p-0 m-0 report-table-div table-responsive shadow-sm border rounded overflow-auto">
-            <table class="table table-sm table-hover p-2 m-0 rounded">
-                <thead class="border-0">
-                    <th>Title</th>
-                    <th>Label</th>
-                    <th>Frequency</th>
-                </thead>
-                <tbody>
-                    {% for summary in summaries %}
-                        <tr class="pointer">
-                            <td class="text-black">{{ summary.title }}</td>
-                            <td>{{ summary.label }}</td>
-                            <td>{{ summary.frequency }}</td>
-                        </tr>
-                        
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <script>
+            const setSelectedSong = (title_iscr) => {
+                [title, isrc] = title_iscr.split(',');
+                $(`input[name=title]`).val(title);
+                $(`input[name=isrc]`).val(isrc);
+                $("#summary-search-form").submit();
+            }
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Classic 105', 'Kiss 100', 'Energy', 'KBC', 'Capital', 'Nation'],
+                    datasets: [{
+                        label: '# of Plays by other stations',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
     </div>
 {% endblock content %}

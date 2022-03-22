@@ -44,6 +44,7 @@ class RecognitionResultsAPIView(APIView):
     def post(self, *args, **kwargs):
         music_data = self.request.data
         artists_list = music_data["artists"]
+        recorded_by, _ = Recorder.objects.get_or_create(name=music_data['recorded_by'])
         artists = [ArtistR.objects.create(name=artist['name']) for artist in artists_list]
         
         album = Album.objects.create(name=music_data['album']['name'])
@@ -65,9 +66,10 @@ class RecognitionResultsAPIView(APIView):
                 title=title, 
                 label=label, 
                 album=album, 
-                iscr=isrc, 
+                isrc=isrc, 
                 upc=upc, 
-                release_date=release_date)
+                release_date=release_date,
+                recorded_by=recorded_by)
         except Exception as e:
             isrc = external_ids['isrc']
             upc = external_ids['upc']
@@ -77,7 +79,8 @@ class RecognitionResultsAPIView(APIView):
                 album=album,
                 isrc=isrc,
                 upc=upc,
-                release_date=release_date)
+                release_date=release_date,
+                recorded_by=recorded_by)
         
         [entry.artists.add(artist) for artist in artists]
         [entry.genres.add(genre) for genre in genres]
@@ -110,7 +113,20 @@ class RecognitionResultsSummary(TemplateView):
             .annotate(frequency=Count('isrc')) \
             .order_by('-frequency')
             
+        selected_isrc = self.request.GET.get('isrc')
+        
+        if selected_isrc:
+            song_stats_qs = SongRecognitionResult.objects.filter(isrc=selected_isrc) \
+                .values('recorded_by__name') \
+                .annotate(frequency=Count('recorded_by__name'))
+            context.update(dict(selected_song_statistics=song_stats_qs))
+        
+        if summary.count() > 0:
+            selected_song = SongRecognitionResult.objects.filter(isrc=summary.first()['isrc']).first()
+        
+        context.update(dict(selected_song=selected_song))
         context.update(dict(summaries=summary))
+        context.update(self.request.GET.dict())
         return context
 
 

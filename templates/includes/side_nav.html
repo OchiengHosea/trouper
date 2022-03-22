@@ -1,25 +1,31 @@
 {% load static %}
-<div id='sidenav' class='border-end bg-dark'>
+<div id='sidenav' class='border-end bg-linear-dark'>
     <div class="text-center border-bottom pt-3 pb-3">
         <img width="40" height="40" src="{% static 'img/user.png' %}" class="rounded-circle" />
-        {% if request.user %}
+        {% if request.user.username %}
             <div>
-                <div><span class="badge badge-sm">{{user.username}}</span></div>
+                <div><span class="badge text-black badge-sm">{{user.username}}</span></div>
                 <div>
-                    <small class="text-white"><a href="{% url 'accounts:logout' %}" class="text-white">Logout</a></small>
+                    <small class="text-black-50"><a href="{% url 'accounts:logout' %}" class="text-black-50">Logout</a></small>
                 </div>
             </div>
         {% else %}
         <div>
-            <span class="badge badge-sm"><a href="{% url 'accounts:login' %}">Login</a></span>
+            <span class="badge text-black-50 badge-sm"><a href="{% url 'accounts:login' %}" class="text-black-50">Login</a></span>
         </div>
         {% endif %}
     </div>
     
     <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="{% url 'artist:artist_list' %}">Artists</a></li>
-        <li><a href="{% url 'song:song_list' %}">Songs</a></li>
-        <li><a href="{% url 'song:recognition_result_summary' %}">Play Summaries</a></li>
+        <li><a href="/"><i class="fa-solid fa-house-chimney me-3"></i>Home</a></li>
+        <li><a href="{% url 'artist:artist_list' %}"><i class="fa-solid fa-star me-3"></i>Artists</a></li>
+        <li><a href="{% url 'song:song_list' %}"><i class="fa-solid fa-guitar me-3"></i>Songs</a></li>
+        <li><a href="{% url 'song:recognition_result_summary' %}"><i class="fa-solid fa-chart-area me-3"></i>Play Summaries</a></li>
     <ul>
+    
+        <style>
+            ul li a i {
+                color: rgba(70, 70, 201, .9);
+            }
+        </style>
 </div>

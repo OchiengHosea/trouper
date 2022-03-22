@@ -9,6 +9,7 @@ class RecognitionResultFilter(django_filters.FilterSet):
     recognition_date_to = django_filters.DateTimeFilter(field_name='created_on', lookup_expr='lte')
     artist = django_filters.CharFilter(field_name='artists', lookup_expr='icontains')
     title = django_filters.CharFilter(field_name='title', lookup_expr='icontains')
+    isrc = django_filters.CharFilter(field_name='isrc', lookup_expr='icontains')
     
     class Meta:
         fields = [
@@ -16,6 +17,7 @@ class RecognitionResultFilter(django_filters.FilterSet):
             'recognition_date_start',
             'recognitino_date_end',
             'artist',
-            'title'
+            'title',
+            'isrc'
             ]
         

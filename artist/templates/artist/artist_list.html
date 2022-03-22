@@ -2,8 +2,8 @@
 
 {% block content %}
     <div class="bg-alice-ble">
-        <div class="p-2">
-            <small class="display-4">Artists</small>
+        <div class="p-2 music-gold-prtn">
+            <small class="display-4 text-blast-brown header">Artists</small>
             <div class="pt-2 d-flex">
                 <div>
                     <button class="btn btn-sm border">
@@ -11,16 +11,15 @@
                     </button>
                 </div>
                 <div class="ms-2">
-                    <input type="text" placeholder="Search by title" class="form-control form-control-sm border-input">
+                    <input type="text" placeholder="Search by name" class="form-control form-control-sm border-input">
                 </div>
+            </div>
+            <div class="songs-summarry mt-4">
+                <small><i class="fa-solid fa-play-pause"></i> {{artists.count}} Artists
             </div>
         </div>
         <div class="song-list p-2">
-            <div class="songs-summarry">
-                <small><i class="fa-solid fa-play-pause"></i> {{artists.count}} Artists
-            </div>
-
-            <hr />
+            
             <div class="container-fluid row">
                 {% for artist in artists %}
                     <div class="col-lg-3 col-md-3 col-sm-6">

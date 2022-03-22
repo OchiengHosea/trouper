@@ -1,24 +1,22 @@
 {% extends 'base_content.html' %}
-
+<div>
 {% block content %}
     <div class="bg-alice-ble">
-        <div class="p-2">
-            <small class="display-4 text-blast-brown">Trouper</small>
+        <div class="p-2 music-gold-prtn">
+            <small class="display-4 text-blast-brown header">Trouper</small>
             <div class="pt-2 d-flex">
                 <div class="ms-2">
                     <input type="text" placeholder="Search by title" class="form-control form-control-sm border-input">
                 </div>
             </div>
-        </div>
-        <div class="song-list p-2">
-            <div class="songs-summarry">
+            <div class="songs-summarry pt-2">
                 <small><i class="fa-solid fa-play-pause"></i> {{recorders.count}} Players
             </div>
-
-            <hr />
+        </div>
+        <div class="song-list p-2">
             <div class="container-fluid row">
                 {% for recorder in recorders %}
-                    <div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
                         <a href="{% url 'song:recognition_result_summary' %}?played_by={{recorder.name}}">
                             <div class="m-2 p-3 border shadow-sm d-flex simple-card pointer bg-white">
                                 <b>
@@ -38,3 +36,4 @@
         </div>
     </div>
 {% endblock content %}
+</div>
